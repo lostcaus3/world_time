@@ -1,6 +1,6 @@
 # world_time
 
-A new Flutter project.
+A mobile app to see time in different cities around the world. 
 
 ## Getting Started
 
