@@ -31,14 +31,16 @@ class _HomepageState extends State<Homepage> {
               onPressed: () async {
                 dynamic result =
                     await Navigator.pushNamed(context, '/location');
-                setState(() {
-                  data = {
-                    'time': result['time'],
-                    'location': result['location'],
-                    'isDayTime': result['isDayTime'],
-                    'flag': result['flag']
-                  };
-                });
+                if (result != null) {
+                  setState(() {
+                    data = {
+                      'time': result['time'],
+                      'location': result['location'],
+                      'isDayTime': result['isDayTime'],
+                      'flag': result['flag']
+                    };
+                  });
+                }
               },
               style: TextButton.styleFrom(primary: Colors.white),
               icon: Icon(Icons.edit_location_sharp),

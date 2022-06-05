@@ -17,33 +17,31 @@ class WorldTime {
           await get(Uri.parse("http://worldtimeapi.org/api/timezone/$url"));
       Map data = jsonDecode(response.body);
 
-      print(data);
+      //print(data);
 
       //get properties from data
 
-      String date_time = data['datetime'];
-      String offsetChange = data['utc_offset'].substring(0,1);
-      String offset_hours = data['utc_offset'].substring(1, 3);
-      String offset_minutes = data['utc_offset'].substring(4, 6);
+      String dateTime = data['datetime'];
+      String offsetChange = data['utc_offset'].substring(0, 1);
+      String offsetHours = data['utc_offset'].substring(1, 3);
+      String offsetMinutes = data['utc_offset'].substring(4, 6);
       print(offsetChange);
 
-      DateTime now = DateTime.parse(date_time);
-      if(offsetChange == '+') {
-        now = now.add(Duration(hours: int.parse(offset_hours)));
-        now = now.add(Duration(minutes: int.parse(offset_minutes)));
+      DateTime now = DateTime.parse(dateTime);
+      if (offsetChange == '+') {
+        now = now.add(Duration(hours: int.parse(offsetHours)));
+        now = now.add(Duration(minutes: int.parse(offsetMinutes)));
+        time = time = DateFormat.jm().format(now);
+        isDayTime = now.hour > 6 && now.hour < 19;
+      } else if (offsetChange == '-') {
+        now = now.subtract(Duration(hours: int.parse(offsetHours)));
+        now = now.subtract(Duration(minutes: int.parse(offsetMinutes)));
         time = time = DateFormat.jm().format(now);
         isDayTime = now.hour > 6 && now.hour < 19;
       }
-      else if(offsetChange == '-'){
-        now = now.subtract(Duration(hours: int.parse(offset_hours)));
-        now = now.subtract(Duration(minutes: int.parse(offset_minutes)));
-        time = time = DateFormat.jm().format(now);
-        isDayTime = now.hour > 6 && now.hour < 19;
-      }
-
     } catch (e) {
-      print("Caught error: $e");
-      time = "could not get time";
+      //print("Caught error: $e");
+      time = "Could not get time";
     }
   }
 }
